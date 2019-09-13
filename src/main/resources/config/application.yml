@@ -1,0 +1,28 @@
+---
+spring:
+  application:
+    name: hikari-pool-bug
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.postgresql.Driver
+
+    # Replace the following values with values needed to connect to your local database
+    url: jdbc:postgresql://localhost/app
+    username: app
+    password: app
+
+    hikari:
+      # The default value is 10, but this will allow us see the tests fail on the 3rd test instead of the 11th
+      maximum-pool-size: 80
+
+  liquibase:
+    contexts: dev
+    change-log: classpath:/db/master.xml
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          lob.non_contextual_creation: true
+    hibernate:
+      ddl-auto: validate
